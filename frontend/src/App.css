@@ -1,0 +1,146 @@
+* {
+  box-sizing: border-box;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+body {
+  background-color: #f4f6f8;
+  color: #1f2937;
+  margin: 0;
+  padding: 20px;
+}
+
+.container {
+  max-width: 850px;
+  margin: 0 auto;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.card {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.card h2 {
+  margin-top: 0;
+  font-size: 1.1rem;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 8px;
+}
+
+.form-inline {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+input,
+select {
+  padding: 8px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 0.95rem;
+}
+
+input[type="text"] {
+  flex: 1;
+  min-width: 220px;
+}
+
+button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  background-color: #2563eb;
+  color: white;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+button:hover {
+  background-color: #1d4ed8;
+}
+
+.btn-secundario {
+  background-color: #6b7280;
+}
+
+.btn-completar {
+  background-color: #059669;
+  margin-right: 6px;
+}
+
+.btn-eliminar {
+  background-color: #dc2626;
+}
+
+.alerta {
+  padding: 12px 16px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  font-weight: 500;
+}
+
+.alerta.exito {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.alerta.error {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.resultado-busqueda {
+  margin-top: 12px;
+  padding: 10px;
+  background-color: #eff6ff;
+  border-radius: 6px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 10px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.fila-completada td:nth-child(2) {
+  text-decoration: line-through;
+  color: #9ca3af;
+}
+
+.badge {
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.badge.alta {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.badge.media {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.badge.baja {
+  background-color: #e0f2fe;
+  color: #075985;
+}
