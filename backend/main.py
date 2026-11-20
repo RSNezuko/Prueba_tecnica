@@ -85,22 +85,22 @@ def listar_tareas():
 
 
 # 4.3. Buscar una tarea por ID
-@app.get("/api/tareas/{tarea_id}", response_model=TareaResponse)
-def buscar_tarea(tarea_id: int):
+@app.get("/api/tareas/prioridad/{prioridad}", response_model=List[TareaResponse])
+def buscar_por_prioridad(prioridad: Literal["alta","media","baja"]):
     conn = get_db_connection()
     try:
         with conn.cursor() as cur:
             cur.execute(
-                "SELECT id, titulo, prioridad, completada FROM tareas WHERE id = %s;",
-                (tarea_id,),
+                "SELECT id, titulo, prioridad, completada FROM tareas WHERE prioridad = %s ORDER BY id ASC;",
+                (prioridad,),   
             )
-            tarea = cur.fetchone()
-            if not tarea:
+            tareas = cur.fetchall()
+            if not tareas:
                 raise HTTPException(
                     status_code=status.HTTP_404_NOT_FOUND,
-                    detail=f"No se encontró ninguna tarea con el ID {tarea_id}.",
+                    detail=f"No se encontraron tareas con la prioridad '{prioridad}',",
                 )
-            return tarea
+            return tareas
     finally:
         conn.close()
 

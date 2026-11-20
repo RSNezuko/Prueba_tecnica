@@ -7,8 +7,8 @@ export default function App() {
   const [tareas, setTareas] = useState([]);
   const [titulo, setTitulo] = useState("");
   const [prioridad, setPrioridad] = useState("media");
-  const [busquedaId, setBusquedaId] = useState("");
-  const [tareaEncontrada, setTareaEncontrada] = useState(null);
+  const [busquedaPrioridad, setBusquedaPrioridad] = useState("alta");
+  const [tareasEncontradas, setTareasEncontradas] = useState(null);
   const [mensaje, setMensaje] = useState({ texto: "", tipo: "" });
 
   const mostrarNotificacion = (texto, tipo = "exito") => {
@@ -67,7 +67,7 @@ export default function App() {
     if (!busquedaId) return;
 
     try {
-      const res = await fetch(`${API_URL}/${busquedaId}`);
+      const res = await fetch(`${API_URL}/prioridad/${busquedaPrioridad}`);
       const data = await res.json();
 
       if (!res.ok) {
@@ -78,7 +78,7 @@ export default function App() {
 
       setTareaEncontrada(data);
     } catch {
-      mostrarNotificacion("Error al buscar la tarea.", "error");
+      mostrarNotificacion("Error al buscar la tarea por prioridad.", "error");
     }
   };
 
@@ -160,15 +160,16 @@ export default function App() {
 
       {/* Buscador por ID */}
       <section className="card">
-        <h2>Buscar Tarea por ID</h2>
+        <h2>Buscar Tareas por prioridad</h2>
         <form onSubmit={handleBuscar} className="form-inline">
-          <input
-            type="number"
-            min="1"
-            placeholder="ID de la tarea"
-            value={busquedaId}
-            onChange={(e) => setBusquedaId(e.target.value)}
-          />
+          <select 
+           value={busquedaPrioridad}
+           onChange ={(e) => setBusquedaPrioridad(e.target.value)}
+           >
+           <option value="alta">Alta</option>
+           <option value="media">Media</option>
+           <option value="baja">Baja</option>
+           </select>
           <button type="submit">Buscar</button>
           {tareaEncontrada && (
             <button
@@ -176,7 +177,6 @@ export default function App() {
               className="btn-secundario"
               onClick={() => {
                 setTareaEncontrada(null);
-                setBusquedaId("");
               }}
             >
               Limpiar
@@ -184,20 +184,18 @@ export default function App() {
           )}
         </form>
 
-        {tareaEncontrada && (
+        {tareasEncontradas && (
           <div className="resultado-busqueda">
-            <strong>Resultado:</strong> #{tareaEncontrada.id} -{" "}
-            {tareaEncontrada.titulo} | Prioridad:{" "}
-            <span className={`badge ${tareaEncontrada.prioridad}`}>
-              {tareaEncontrada.prioridad}
-            </span>{" "}
-            | Estado:{" "}
-            {tareaEncontrada.completada ? "Completada" : "Pendiente"}
-          </div>
-        )}
+            <strong>Resultados con prioridad {busquedaPrioridad}: {tareasEncontradas.length}</strong>
+           <ul>{tareasEncontradas.map((t)=>(
+            <li key={t.id}>
+            #{t.id} - {t.titutlo} ({t.completada ? "Completada" : "Pendiente"})
+            </li>
+           ))}
+           </ul>
+      </div>
+          )}
       </section>
-
-      {/* Listado general */}
       <section className="card">
         <h2>Lista de Tareas ({tareas.length})</h2>
         {tareas.length === 0 ? (
